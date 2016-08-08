@@ -119,17 +119,17 @@ public class KataController {
                                      @RequestParam(value="start") long m,
                                      @RequestParam(value="end") long n) {
 
-        ArrayList<Long> allPrimeNumbers = new ArrayList<>();
+        long[] allPrimeNumbers = new long[0];
         for (long i=m;i<=n;i++) {
             if (isPrimeNumber(i)) {
-                allPrimeNumbers.add(i);
+                allPrimeNumbers = addToArray(i,allPrimeNumbers);
             }
         }
 
         long[] validNumbers = new long[0];
-        for (int index = 0; index < allPrimeNumbers.size()-1;index++) {
-            if (allPrimeNumbers.get(index+1) - allPrimeNumbers.get(index) == g) {
-                validNumbers = addToArray(allPrimeNumbers.get(index),validNumbers);
+        for (int index = 0; index < allPrimeNumbers.length-1;index++) {
+            if (allPrimeNumbers[index+1] - allPrimeNumbers[index] == g) {
+                validNumbers = addToArray(allPrimeNumbers[index],validNumbers);
             }
         }
 
