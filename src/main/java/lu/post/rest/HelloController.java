@@ -1,11 +1,8 @@
 package lu.post.rest;
 
-import java.util.concurrent.atomic.AtomicLong;
-
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class HelloController {
