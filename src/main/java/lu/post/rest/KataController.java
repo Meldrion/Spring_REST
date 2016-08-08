@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 /**
  * @author Fabien Steines
  */
@@ -109,6 +111,61 @@ public class KataController {
         }
 
         return output;
+    }
+
+    @CrossOrigin
+    @RequestMapping("/gabInPrimes")
+    public long[] gabInPrimes(@RequestParam(value="gap") int g,
+                                     @RequestParam(value="start") long m,
+                                     @RequestParam(value="end") long n) {
+
+        ArrayList<Long> allPrimeNumbers = new ArrayList<>();
+        for (long i=m;i<=n;i++) {
+            if (isPrimeNumber(i)) {
+                allPrimeNumbers.add(i);
+            }
+        }
+
+        long[] validNumbers = new long[0];
+        for (int index = 0; index < allPrimeNumbers.size()-1;index++) {
+            if (allPrimeNumbers.get(index+1) - allPrimeNumbers.get(index) == g) {
+                addToArray(allPrimeNumbers.get(index),validNumbers);
+                addToArray(allPrimeNumbers.get(index+1),validNumbers);
+            }
+        }
+
+        return validNumbers.length > 0 ? validNumbers : null;
+    }
+
+    /**
+     *
+     * @param number
+     * @return
+     */
+    private boolean isPrimeNumber(long number) {
+
+        int numberOfDiv = 0;
+
+        for (int i=0;i<number;i++) {
+            if (i % 2 == 0) {
+                numberOfDiv++;
+            }
+        }
+
+        return numberOfDiv == 1;
+    }
+
+    /**
+     *
+     * @param value
+     * @param array
+     * @return
+     */
+    private long[] addToArray(long value,long[] array) {
+        long[] newArray = new long[array.length + 1];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        newArray[newArray.length - 1] = value;
+        return newArray;
     }
 
 }
