@@ -129,8 +129,7 @@ public class KataController {
         long[] validNumbers = new long[0];
         for (int index = 0; index < allPrimeNumbers.size()-1;index++) {
             if (allPrimeNumbers.get(index+1) - allPrimeNumbers.get(index) == g) {
-                addToArray(allPrimeNumbers.get(index),validNumbers);
-                addToArray(allPrimeNumbers.get(index+1),validNumbers);
+                validNumbers = addToArray(allPrimeNumbers.get(index),validNumbers);
             }
         }
 
@@ -146,8 +145,8 @@ public class KataController {
 
         int numberOfDiv = 0;
 
-        for (int i=0;i<number;i++) {
-            if (i % 2 == 0) {
+        for (int i=1;i<number;i++) {
+            if (number % i == 0) {
                 numberOfDiv++;
             }
         }
