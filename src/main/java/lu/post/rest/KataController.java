@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Fabien Steines
@@ -14,12 +15,29 @@ import java.util.ArrayList;
 @RestController
 public class KataController {
 
+    /*
+    * Square - solved
+    * */
+
+    /**
+     *
+     * @param numberOfBlocks
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/square")
     public boolean isSquare(@RequestParam(value="numberOfBlocks")int numberOfBlocks) {
         return Math.ceil(Math.sqrt(numberOfBlocks)) == Math.sqrt(numberOfBlocks);
     }
 
+    /*
+        Needle in the Haystack - solved
+     */
+
+    /**
+     * @param haystack
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/findNeedle")
     public String findNeedle(@RequestParam(value="haystack")Object[] haystack) {
@@ -41,6 +59,15 @@ public class KataController {
 
     }
 
+    /*
+    * Find Odd - solved
+    * */
+
+    /**
+     *
+     * @param A
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/findOdd")
     public int findIt(@RequestParam(value="pool")int[] A) {
@@ -58,6 +85,12 @@ public class KataController {
         return A[counter];
     }
 
+    /**
+     *
+     * @param number
+     * @param array
+     * @return
+     */
     private boolean isOdd(int number,int[] array) {
 
         int count = 0;
@@ -71,7 +104,15 @@ public class KataController {
         return count % 2 != 0;
     }
 
+    /*
+        Song Decode - solved
+     */
 
+    /**
+     *
+     * @param input
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/songDecode")
     private String songDecoder(@RequestParam(value="song") String input) {
@@ -88,6 +129,17 @@ public class KataController {
         }
         return output;
     }
+
+
+    /*
+    * ACCUM - Solved
+    * */
+
+    /**
+     *
+     * @param s
+     * @return
+     */
 
     @CrossOrigin
     @RequestMapping("/accum")
@@ -113,6 +165,18 @@ public class KataController {
         return output;
     }
 
+
+    /*
+    * GAB IN PRIMES - unsolved
+    * */
+
+    /**
+     *
+     * @param g
+     * @param m
+     * @param n
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/gabInPrimes")
     public long[] gabInPrimes(@RequestParam(value="gap") int g,
@@ -165,6 +229,35 @@ public class KataController {
         System.arraycopy(array, 0, newArray, 0, array.length);
         newArray[newArray.length - 1] = value;
         return newArray;
+    }
+
+    /*
+    * PrinterError - unsolved - for now ;)
+    * */
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping("/printerError")
+    public static String printerError(@RequestParam(value = "input") String s) {
+
+        char start = 'a';
+        char end = 'm';
+        int count = s.length();
+        int countInvalid = 0;
+
+        for (int i=0;i<count;i++) {
+
+            char current = s.charAt(i);
+            if (!(start <= current && current <= end)) {
+                countInvalid ++;
+            }
+        }
+
+        return String.format("%d/%d",countInvalid,count);
     }
 
 }
