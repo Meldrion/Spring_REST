@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * @author Fabien Steines
@@ -259,5 +261,109 @@ public class KataController {
 
         return String.format("%d/%d",countInvalid,count);
     }
+
+    /**
+     *
+     * @param dna
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping("/dnaStrandmakeComplement")
+    public static String DnaStrandmakeComplement(@RequestParam(value = "dna") String dna) {
+
+        String output = "";
+        for (char current : dna.toCharArray()) {
+
+            switch (current) {
+                case 'A':
+                    output += "T";
+                    break;
+                case 'T':
+                    output += "A";
+                    break;
+                case 'C':
+                    output += "G";
+                    break;
+                case 'G':
+                    output += "C";
+                    break;
+            }
+
+        }
+
+        return output;
+    }
+
+    /**
+     *
+     * @param words
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping("/orderString")
+    public String order(@RequestParam(value = "inputString") String words) {
+
+        String returnString = "";
+
+        String[] wordItems = words.split(" ");
+        int[] numbers = getNumbers(words);
+
+        int smallestIndex = 0;
+        for (int i = 0; i < numbers.length ; i ++) {
+            smallestIndex = getSmallestIndex(numbers,smallestIndex);
+            returnString += wordItems[smallestIndex];
+        }
+
+        return returnString;
+    }
+
+    private int getSmallestIndex(int[] array,int smallestIndex) {
+
+        int smallestValue = array[smallestIndex];
+        int currentSmallest = array[0];
+        int resultIndex = 0;
+
+        for (int i=0;i<array.length;i++) {
+
+            int probe = array[i];
+            System.out.println("Checking " + smallestValue + " and " + probe);
+
+            if (currentSmallest <= probe && currentSmallest <= smallestValue) {
+                currentSmallest = smallestValue;
+            }
+
+            if (probe < currentSmallest) {
+                System.out.println(probe + " < " + currentSmallest);
+
+                if (smallestValue < currentSmallest) {
+                    currentSmallest = probe;
+                    resultIndex = i;
+                }
+            }
+
+        }
+
+        return resultIndex;
+    }
+
+    /**
+     *
+     * @param input
+     * @return
+     */
+    private int[] getNumbers(String input) {
+
+        input = input.replaceAll("[^-?0-9]+", " ");
+
+        String[] trimmedString = input.trim().split(" ");
+        int[] returnArray = new int[trimmedString.length];
+
+        for (int i = 0;i<trimmedString.length;i++) {
+            returnArray[i] = Integer.valueOf(trimmedString[i]);
+        }
+
+        return returnArray;
+    }
+
 
 }
